@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS company_db;
-CREATE DATABASE company_db;
+DROP DATABASE IF EXISTS company;
+CREATE DATABASE company;
 
-USE company_db;
+USE company;
 
 CREATE TABLE department  (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -9,9 +9,8 @@ CREATE TABLE department  (
 );
 
 CREATE TABLE roles (
-  id INT NOT NULL AUTO_INCREMENT,
+  role_id INT NOT NULL AUTO_INCREMENT,
   role VARCHAR(30),
-  role_id INT,
   role_department VARCHAR(30),
   salary INT,
   PRIMARY KEY (id)
@@ -27,3 +26,6 @@ CREATE TABLE employee (
   manager VARCHAR(30),
   PRIMARY KEY (id)
 );
+
+
+

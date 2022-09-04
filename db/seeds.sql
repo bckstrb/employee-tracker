@@ -1,27 +1,27 @@
-INSERT INTO department (id, name)
+INSERT INTO department (name)
 VALUE
-    (1, "Executive"),
-    (2, "Security"),
-    (3, "Logistics"),
-    (4, "Construction"),
-    (5, "Human Services"),
-    (6, "Production");
+    ("Executive"),
+    ("Security"),
+    ("Logistics"),
+    ("Construction"),
+    ("Human Services"),
+    ("Production");
 
-INSERT INTO roles (id, role_id, role, role_department, salary)
+INSERT INTO roles (title, salary, department_id)
 VALUE
-    (1, 125, "CEO", "Executive", 90,000),
-    (2, 135, "Guard", "Security", 85,000),
-    (3, 145, "Town Planner", "Logistics", 80,000),
-    (4, 155, "Builder", "Construction", 70,000),
-    (5, 165, "Counselor", "Human Services", 65,000),
-    (6, 175, "Buyer", "Production", 65,000);
+    ("CEO", 90000, 1),
+    ("Guard", 85000, 2),
+    ("Town Planner", 100000, 3),
+    ("Builder", 70000, 4),
+    ("Counselor", 65000, 5),
+    ("Buyer", 65000, 6);
 
-INSERT INTO employee (id, first_name, last_name, title, emp_id, dep_name, emp_salary, manager)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUE
-    (1, "Rick", "Grimes", "CEO", 125, "Executive", 90,000, "Negan"),
-    (2, "Daryl", "Dixon", "Guard", 135, "Security", 85,000, "Rick Grimes"),
-    (3, "Maggie", "Greene", "Town Planner", 145,  "Logistics", 80,000, "Michonne"),
-    (4, "Glenn", "Rhea", "Builder", 155, "Construction", 70,000, "Hershel Greene"),
-    (5, "Gabriel", "Stokes", "Counselor", 165, "Human Services", 65,000, "Rick Grimes"),
-    (6, "Tara", "Chambler", "Buyer", 175, "Production", 65,000, "Michonne");
+    ("Rick", "Grimes", 1, NULL),
+    ("Daryl", "Dixon", 2, 1),
+    ("Maggie", "Greene", 3, 2);
+    -- ("Glenn", "Rhea", "Builder", 155, "Construction", 70,000, "Hershel Greene"),
+    -- ("Gabriel", "Stokes", "Counselor", 165, "Human Services", 65,000, "Rick Grimes"),
+    -- ("Tara", "Chambler", "Buyer", 175, "Production", 65,000, "Michonne");
     

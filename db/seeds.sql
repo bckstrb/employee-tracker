@@ -20,8 +20,8 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUE
     ("Rick", "Grimes", 1, NULL),
     ("Daryl", "Dixon", 2, 1),
-    ("Maggie", "Greene", 3, 2);
-    -- ("Glenn", "Rhea", "Builder", 155, "Construction", 70,000, "Hershel Greene"),
-    -- ("Gabriel", "Stokes", "Counselor", 165, "Human Services", 65,000, "Rick Grimes"),
-    -- ("Tara", "Chambler", "Buyer", 175, "Production", 65,000, "Michonne");
+    ("Maggie", "Greene", 3, 2),
+    ("Glenn", "Rhea", 4, 3),
+    ("Gabriel", "Stokes", 5, 1),
+    ("Tara", "Chambler", 6, 2);
     

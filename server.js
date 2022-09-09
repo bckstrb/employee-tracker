@@ -90,10 +90,10 @@ const viewEmployees = () => {
   const sql = `SELECT employee.id AS 'ID',
     employee.first_name AS 'First Name',
     employee.last_name AS 'Last Name',
-    role.id AS 'Role ID'
+    role.title AS 'Title'
     FROM employee
     LEFT JOIN roles
-    ON (roles.id = employee.role_id)`;
+    ON (roles.title = employee.role_id)`;
 
   db.query(sql, (err, res) => {
     console.table(res);

@@ -87,15 +87,20 @@ const viewRoles = () => {
 };
 
 const viewEmployees = () => {
-  const sql = `SELECT employee.id AS 'ID',
-    employee.first_name AS 'First Name',
-    employee.last_name AS 'Last Name',
-    role.title AS 'Title'
-    FROM employee
+  const sql = `SELECT e.id AS 'ID',
+    e.first_name AS 'First Name',
+    e.last_name AS 'Last Name',
+    roles.title AS 'Title',
+    manager.first_name AS 'Manager First Name',
+    manager.last_name AS 'Manager Last Name'
+    FROM employee e
     LEFT JOIN roles
-    ON (roles.title = employee.role_id)`;
+    ON (roles.id = e.role_id)
+    LEFT JOIN employee manager
+    ON (manager.id = e.manager_id)`;
 
   db.query(sql, (err, res) => {
+    console.log(err);
     console.table(res);
     chooseOption();
   });
@@ -110,48 +115,88 @@ const addDepartment = async () => {
       message: "What department would you like to add?",
     })
     .then((answer) => {
-      db.query("INSERT INTO department SET name = ?", answer.department, (err, res) => {
-        answer.department;
-        console.log(answer.department + " has been updated!");
-        chooseOption();
-      });      
+      db.query(
+        "INSERT INTO department SET name = ?",
+        answer.department,
+        (err, res) => {
+          answer.department;
+          console.log(answer.department + " has been updated!");
+          chooseOption();
+        }
+      );
     });
-    
 };
 
-// const addRole = async () => {
-//   return inquirer
-//     .prompt([
-//       {
-//       type: "input",
-//       name: "roleTitle",
-//       message: "What is the title of the you would like to add?",
-//     },
-//     {
-//       type: "input",
-//       name: "roleSalaray",
-//       message: "What is the salary for this role?",
-//     },
-//     {
-//       type: "input",
-//       name: "roleDepartment",
-//       message: "What department is the role apart of?"
-//     },
-//   ])
-//     .then((answer) => {
-//       db.query("INSERT INTO roles SET name = ?", 
-//       {
-//         roleTitle: answer.role, 
-//         roleSalary: answer.salary, 
-//         roleDepartment: answer.department
-//       }, 
-//       (err, res) => {       
-//         console.log(answer.title + " has been updated!");
-//         chooseOption();
-//       });      
-//     });
-// };
+const addRole = () => {
+  const sql = `SELECT id, name FROM department`;
 
+  db.query(sql, (err, res) => {
+    // console.log(res);
+    // console.log(err);
+    res = res.map(function (department){
+      return {
+        value: department.id,
+        name: department.name
+      }
+    })
+    return inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "roleTitle",
+          message: "What is the title of the you would like to add?",
+        },
+        {
+          type: "input",
+          name: "roleSalary",
+          message: "What is the salary for this role?",
+        },
+        {
+          type: "list",
+          name: "roleDepartment",
+          message: "What department is the role apart of?",
+          choices: res
+        },
+      ])
+      .then((answer) => {
+        db.query(
+          "INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?);",
+          [
+            answer.roleTitle,
+            answer.roleSalary,
+            answer.roleDepartment
+          ],
+          (err, res) => {
+            console.log(answer.roleTitle + " has been updated!");
+            chooseOption();
+          }
+        );
+      });
+    chooseOption();
+  });
+};
 
+// const addEmployee = () => {
+//   const roleSql = `SELECT id, title FROM roles`;
+//   const managerSql = `SELECT id, first_name, last_name FROM employee`;
 
+//   db.query(roleSql, (err, role) => {
+//     role = roleSql.map(function (roles){
+//       return {
+//         value: roles.id,
+//         title: roles.title
+//       }
+//     })
+//     db.query(managerSql, (err, manager) => {
+//       manager = manager.map(function (employee){
+//         return {
+//           value: employee.id,
+//           name: employee.first_name,
+//           name: employee.last_name
+//         }
+//       })
+      
 
+//     })
+//   })
+// }
